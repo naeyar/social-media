@@ -1,9 +1,12 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import List from "./List"
 import Item from "./Item"
 import Form from "./Form"
+import { AppContent } from "./ThemedApp"
 
 export default function App(){
+
+  const { mode,setMode } = useContext(AppContent);
   const [data,setData] = useState([
     {id:1,content:"Hello World!",name:"Alice"},
     {id:2,content:"React is fun!",name:"Bob"},
@@ -20,7 +23,7 @@ export default function App(){
   }
 
   return(
-    <div style={{maxWidth:600,margin:"20px auto"}}>
+    <div style={{maxWidth:600,margin:"20px auto",background:mode === "dark" ? "black": "white",color:mode === "dark" ? "white": "black"}}>
       <h1 style={{
         display:"flex",
         justifyContent:"space-between",
@@ -37,6 +40,17 @@ export default function App(){
           }}>
             {showForm ? "x" : "+"}
           </button>
+          <button onClick={() => setMode(mode ==="dark" ? "light":"dark")}
+            style={{
+              marginLeft:8,
+              padding:"0 20px",
+              height:32,
+              borderRadius:32,
+              border:"0 none",
+              background: mode === "dark" ? "#333" : "#ddd",
+              color:mode === "dark" ? "white" : "black",
+
+            }}>{mode === "dark" ? "light": "dark"}</button>
       </h1>
 {     showForm && <Form add={add}></Form>}
      <List>
